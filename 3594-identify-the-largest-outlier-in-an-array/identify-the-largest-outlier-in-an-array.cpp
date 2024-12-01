@@ -17,7 +17,8 @@ public:
 
         for (int num : nums) {
             int remainingSum = totalSum - num;
-            if (mp.find(remainingSum / 2) != mp.end() && (remainingSum % 2 == 0) && ((remainingSum / 2 != num) || (mp[num] > 1))) {
+            if (mp.find(remainingSum / 2) != mp.end() 
+            && (remainingSum % 2 == 0) && ((remainingSum / 2 != num) || (mp[num] > 1))) {
                 ans = std::max(num, ans);
             }
         }
