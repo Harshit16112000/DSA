@@ -14,19 +14,19 @@ public:
             }
         }
 
-        int cnt = 0;
+        int cnt = 0;    
+        unordered_map<int,int> mp;
         for(int colStart = 0; colStart < col; colStart++)
         {
             for(int colEnd =colStart; colEnd < col; colEnd++)
             {
+                int sum = 0;
+                mp = {{0,1}};
                 for(int rowStart = 0; rowStart < row; rowStart++)
                 {
-                    int sum = 0;
-                    for(int rowEnd = rowStart; rowEnd < row; rowEnd++)
-                    {
-                        sum += pSum[rowEnd][colEnd] - (colStart ? pSum[rowEnd][colStart - 1] : 0);
-                        if(sum == target) cnt++;
-                    }
+                sum += pSum[rowStart][colEnd] - (colStart ? pSum[rowStart][colStart - 1] : 0);
+                cnt += mp[sum-target];
+                mp[sum]++;    
                     
                 }
             }
