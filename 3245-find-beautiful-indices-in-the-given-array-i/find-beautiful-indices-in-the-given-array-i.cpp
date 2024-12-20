@@ -12,7 +12,7 @@ public:
         {
             if(s.substr(i,b.size()) == b)      matchB.push_back(i);
         }
-
+        
         vector<int>result;
         for(int i=0;i<matchA.size();i++)
         {
