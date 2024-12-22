@@ -9,14 +9,18 @@ public:
         int l = nums[i] - k;
         int r = nums[i] + k;
 
-        if(end >= r)
+        if(end < l)
+           {
+            end = l;
+            cnt++;
+           }
+        else if(end < r) 
+        {
+           end++;
            cnt++;
-        else 
-           end = max(end+1, nums[i] - k);
+        }
      }   
-    
-    
 
-    return nums.size() - cnt;
+    return cnt;
     }
 };
