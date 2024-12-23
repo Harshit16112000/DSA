@@ -11,7 +11,12 @@ public:
         }
         return false;
     }
+
     long long repairCars(vector<int>& ranks, int cars) {
+       //Here, check for all thr value of time.
+       // As per constraint.
+       // r*c2 = time
+       // 100 * 10^6 * 10^6 = 1e14;
         long long  r = 1e14;
         long long l = 0;
 
