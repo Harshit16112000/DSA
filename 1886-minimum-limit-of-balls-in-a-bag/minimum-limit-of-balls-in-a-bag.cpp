@@ -6,11 +6,13 @@ public:
         int cnt = 0;
         for(int i=0;i<nums.size();i++)
         {
+            // Done as 5 is deivided into 2,3 where cnt is 2, but here we need the cnt as 1.    
             cnt += (nums[i] - 1) / mid;
             if(cnt > maxOperation)  return false;
         }
         return true;
     }
+
     int minimumSize(vector<int>& nums, int maxOperations) {
         int l = 1;
         int r = 0;
