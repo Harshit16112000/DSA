@@ -9,7 +9,7 @@ public:
             cnt +=  sqrt(time/it);
             if(cnt >= cars)  return true;
         }
-        return cnt >= cars;
+        return false;
     }
     long long repairCars(vector<int>& ranks, int cars) {
         long long  r = 1e14;
