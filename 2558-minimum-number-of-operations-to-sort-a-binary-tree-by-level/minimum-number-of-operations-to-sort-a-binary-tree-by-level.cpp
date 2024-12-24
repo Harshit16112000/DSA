@@ -8,13 +8,13 @@ public:
         // Process tree level by level using BFS
         while (!queue.empty()) {
             int levelSize = queue.size();
-            vector<int> levelValues(levelSize);
+            vector<int> levelValues;
 
             // Store values of current level and add children to queue
             for (int i = 0; i < levelSize; i++) {
                 TreeNode* node = queue.front();
                 queue.pop();
-                levelValues[i] = node->val;
+                levelValues.push_back(node->val);
 
                 if (node->left != nullptr) queue.push(node->left);
                 if (node->right != nullptr) queue.push(node->right);
@@ -46,7 +46,9 @@ private:
 
                 // Update position of swapped values
                 int curPos = pos[target[i]];
+                int ori = pos[original[i]];
                 pos[original[i]] = curPos;
+                pos[target[i]] = ori;
                 swap(original[curPos], original[i]);
             }
         }
