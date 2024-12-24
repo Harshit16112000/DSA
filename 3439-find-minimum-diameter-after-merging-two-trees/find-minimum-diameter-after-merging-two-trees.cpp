@@ -29,8 +29,12 @@ public:
     {
         auto graph1 = makeGraph(edges1);
         auto graph2 = makeGraph(edges2);
+        // It has FarthestNode {dist , node}
         pair<int,int> res = {INT_MIN,-1}, res2 = {INT_MIN, -1};
+
+        // Calculating the Farthest Distance from node 0 and value being upadted in Graph 
         findFarthest(0,-1,0,graph1, res);
+        // From that furthest distance calculating other end of farthest distance
         findFarthest(res.second,-1,0,graph1, res2);
         int diameter1 = res2.first;
 
@@ -40,7 +44,9 @@ public:
         findFarthest(0,-1,0,graph2, res);
         findFarthest(res.second,-1,0,graph2, res2);
         int diameter2 = res2.first;
+
         int ans = (diameter1 + 1)/2 + (diameter2 + 1)/2 + 1;
+        // WHy need to calculate the maximum, is still doubt, need to check that.
         return max({diameter1, diameter2, ans});
 
     }
