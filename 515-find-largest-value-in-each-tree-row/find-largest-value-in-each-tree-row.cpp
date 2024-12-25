@@ -20,21 +20,18 @@ public:
         while(!q.empty())
         {
             int n = q.size();
-            vector<int> level;
+            int maxiNodeAtLevel = INT_MIN;
             
             for(int i=0;i<n;i++)
             {
                 TreeNode* node = q.front();
                 q.pop();
-                level.push_back(node->val);
+                maxiNodeAtLevel = max(maxiNodeAtLevel, node->val);
                 if(node -> left != NULL)  q.push(node->left);
                 if(node->right != NULL)  q.push(node->right);
             }
-            sort(level.begin(), level.end());
-            reverse(level.begin(), level.end());
-
-            cout << endl;
-            ans.push_back(level[0]);
+            
+            ans.push_back(maxiNodeAtLevel);
         }
         return ans;
     }
