@@ -19,11 +19,12 @@ public:
        
         int n = word.size();
        int lpsMax = lps[word.size() -1];
+       // Need to check this one, Check for testcases 2 (FOr dryrun)
        while(lpsMax > 0 && (n - lpsMax )%k != 0)
        {
             lpsMax = lps[lpsMax-1]; 
-             
        }
+       // (n+k-1) -> It is worst case possible   
     return (n- lpsMax)%k == 0 ? (n- lpsMax)/k : (n+k-1)/k;
     }
 };
