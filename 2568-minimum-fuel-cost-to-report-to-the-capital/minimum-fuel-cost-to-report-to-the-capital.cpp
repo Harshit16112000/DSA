@@ -5,51 +5,54 @@ public:
             return 0; // No roads, no cost
         }
 
-        int n = roads.size() + 1; // Number of nodes
-        vector<unordered_set<int>> adj(n);
-        vector<int> reps(n, 1); // Each node starts with 1 representative
-        
-        // Build adjacency list
+        int n = roads.size() + 1; // Total number of nodes (roads + 1)
+        vector<vector<int>> adj(n);
+        vector<int> degree(n, 0); // Degree of each node
+        vector<int> reps(n, 1);  // Each node starts with 1 representative
+
+        // Build adjacency list and initialize degrees
         for (auto& road : roads) {
-            adj[road[0]].insert(road[1]);
-            adj[road[1]].insert(road[0]);
+            adj[road[0]].push_back(road[1]);
+            adj[road[1]].push_back(road[0]);
+            degree[road[0]]++;
+            degree[road[1]]++;
         }
 
-        // Initialize deque with leaf nodes
-        queue<int> leaves;
-        for (int i = 0; i < n; ++i) {
-            if (adj[i].size() == 1) {
-                leaves.push(i);
+        // Identify leaf nodes
+        deque<int> leaves;
+        for (int i = 1; i < n; ++i) {
+            if (degree[i] == 1) { // Node with degree 1 is a leaf
+                leaves.push_back(i);
             }
         }
+
+        long long fuelCost = 0;
 
         // Process leaf nodes
         while (!leaves.empty()) {
             int cur = leaves.front();
-            leaves.pop();
+            leaves.pop_front();
 
-            if (cur == 0) {
-                continue; // Skip the capital node
+            for (int neighbor : adj[cur]) {
+                if (degree[neighbor] > 0) { // Process only if the neighbor is still active
+                    // Add representatives to the neighbor
+                    reps[neighbor] += reps[cur];
+
+                    // Calculate fuel cost
+                    fuelCost += (reps[cur] + seats - 1) / seats;
+
+                    // Reduce the degree of the neighbor
+                    degree[neighbor]--;
+
+                    // If the neighbor becomes a leaf, add it to the queue
+                    if (degree[neighbor] == 1 && neighbor != 0) {
+                        leaves.push_back(neighbor);
+                    }
+                }
             }
 
-            // Get the neighbor and remove the current node from adjacency list
-            int nbr = *adj[cur].begin();
-            adj[cur].erase(nbr);
-            adj[nbr].erase(cur);
-
-            // Add representatives to the neighbor
-            reps[nbr] += reps[cur];
-
-            // If the neighbor becomes a leaf, add it to the queue
-            if (adj[nbr].size() == 1) {
-                leaves.push(nbr);
-            }
-        }
-
-        // Calculate the total fuel cost
-        long long fuelCost = 0;
-        for (int i = 1; i < n; ++i) { // Skip the capital (node 0)
-            fuelCost += (reps[i] + seats - 1) / seats; // Ceil(reps / seats)
+            // Mark the current node as processed
+            degree[cur] = 0;
         }
 
         return fuelCost;
