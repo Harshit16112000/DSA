@@ -16,17 +16,17 @@ public:
         }
 
         // Initialize deque with leaf nodes
-        deque<int> leaves;
+        queue<int> leaves;
         for (int i = 0; i < n; ++i) {
             if (adj[i].size() == 1) {
-                leaves.push_back(i);
+                leaves.push(i);
             }
         }
 
         // Process leaf nodes
         while (!leaves.empty()) {
             int cur = leaves.front();
-            leaves.pop_front();
+            leaves.pop();
 
             if (cur == 0) {
                 continue; // Skip the capital node
@@ -42,7 +42,7 @@ public:
 
             // If the neighbor becomes a leaf, add it to the queue
             if (adj[nbr].size() == 1) {
-                leaves.push_back(nbr);
+                leaves.push(nbr);
             }
         }
 
