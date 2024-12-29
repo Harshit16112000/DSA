@@ -1,44 +1,43 @@
 class Solution {
 public:
     string answerString(string word, int numFriends) {
-        
-        //if we have only one friend then no need to split
+        string ans = "";
         if(numFriends == 1)
             return word;
-
-        int i=0; // start index
-
-        int j = word.size()-(numFriends - 1); // So that we have a window
-        // only upto that particular index (j).
-        // Say we have "dbca" and we start from 0 with a goal to split in 2 friends i.e 1 split, 
-        // then the j will be uptil 3. that is, in one go if we take 
-        // three characters together ("dbc") then a single character will be left.
-        // and it would be satisfying the constraint of numFriends splits - "dbc" & "a"
-        // else it won't be possible
-        // as the loop moves, the window moves
-        // "dbc", "bca", "ca", "a".
+            
+        int n = word.size();
+        int wordLimit = n - (numFriends - 1);
         
-        string ans = ""; // empty string to store the final answer
+        string str;
+        int i=0, j=0;
 
-        int n = word.size(); // size of the input word
-
-        while(i<=n) // to generate all the split words and get the max of them
+        while(j < wordLimit)
         {
-            string temp = "";
-
-            // the min(n ,j) is for the purpose of maintaining the window size 
-            // with respect to the size of the word
-            // if j exceeds n then the window should shrink to avoid
-            // out of bounds access
-
-            for(int k=i ; k < min(n, j) ; k++)
-            {
-                temp+=word[k];
-            }
-            ans = max(ans, temp); // max of all splits as answer
-            i++;
+            str += word[j];
+            ans = max(ans, str);
             j++;
         }
+        
+        while(j < n)
+        {
+            str.erase(0,1);
+            
+            str+= word[j];
+            j++;
+            i++;
+            ans = max(ans, str);
+        }
+        
+
+       for (int i = 0; i <str.size(); ++i) {
+            string sub = str.substr(i, n - i);
+            ans = max(ans, sub);
+        }
+
+        
+
+
         return ans;
+
     }
 };
