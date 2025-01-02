@@ -7,11 +7,14 @@ public:
     string thousands[4] = {"", "Thousand", "Million", "Billion"};
     
     // Helper function to convert numbers less than 1000
-    string helper(int n) {
-        if (n == 0) return "";
-        if (n < 20) return ones[n] + " ";
-        if (n < 100) return tens[n / 10] + " " + helper(n % 10);
-        return ones[n / 100] + " Hundred " + helper(n % 100);
+    string helper(int nums)
+    {
+        if (nums == 0) return "";
+        if(nums < 20)  return ones[nums] + " ";
+
+        if(nums < 100)  return tens[nums/10] + " " + helper(nums%10);
+         
+         return ones[nums / 100] + " Hundred " + helper(nums % 100);
     }
     
     // Main function to convert the number to words
@@ -23,14 +26,15 @@ public:
         int i = 0; // Index for thousands array
         
         // Process each group of three digits
-        while (num > 0) {
-            if (num % 1000 != 0) {
-                result = helper(num % 1000) + thousands[i] + " " + result;
-            }
-            num /= 1000;
-            i++;
-        }
-        
+            while(num > 0)
+            {
+                if(num%1000 != 0)
+                {
+                    result = helper(num%1000) +  thousands[i] + " " + result;
+                }
+                num = num/1000;
+                i++;
+            }    
         // Remove any trailing spaces
         while (!result.empty() && result.back() == ' ') result.pop_back();
         return result;
