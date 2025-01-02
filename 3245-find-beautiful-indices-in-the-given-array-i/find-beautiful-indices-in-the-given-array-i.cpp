@@ -17,7 +17,9 @@ public:
         for(int i=0;i<matchA.size();i++)
         {
             auto it = lower_bound(matchB.begin(), matchB.end(), matchA[i]-k);
-            if ((it != matchB.end()) && (abs(*it - matchA[i]) <= k)) result.push_back(matchA[i]);
+            
+            // If b matrix is not zero, so, we needed it
+            if ((it != matchB.end())  && (abs(*it - matchA[i]) <= k) ) result.push_back(matchA[i]);
         }
         return result;
     }
