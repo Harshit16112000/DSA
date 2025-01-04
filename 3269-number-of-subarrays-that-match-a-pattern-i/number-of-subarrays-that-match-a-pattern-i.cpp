@@ -17,7 +17,7 @@ public:
                     else if(pattern[k] == -1 && nums[i+l] > nums[i+l+1]) l++;
                     else match = false;
                 }
-                if(match)  ans++;
+                if(l == n-1)  ans++;
             }
         }
 
