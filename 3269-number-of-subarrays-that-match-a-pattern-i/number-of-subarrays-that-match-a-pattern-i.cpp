@@ -12,6 +12,7 @@ public:
                 
                 for(int k=0;k<pattern.size();k++)
                 {
+                    // Was not able to think of approach i+l
                     if(pattern[k] == 0 && nums[i+l] == nums[i+l+1])  l++;
                     else if(pattern[k] == 1 && nums[i+l] < nums[i+l+1]) l++;
                     else if(pattern[k] == -1 && nums[i+l] > nums[i+l+1]) l++;
