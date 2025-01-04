@@ -27,31 +27,36 @@ public:
     }
 
 private:
-    // Calculate minimum swaps needed to sort an array
-    int getMinSwaps(vector<int>& original) {
-        int swaps = 0;
-        vector<int> target = original;
-        sort(target.begin(), target.end());
+    int getMinSwaps(vector<int>& array) {
+    int swapCount = 0; // Count the number of swaps
+    vector<int> sortedArray = array; // Create a sorted version of the input array
+    sort(sortedArray.begin(), sortedArray.end());
 
-        // Map to track current positions of values
-        unordered_map<int, int> pos;
-        for (int i = 0; i < original.size(); i++) {
-            pos[original[i]] = i;
-        }
-
-        // For each position, swap until correct value is placed
-        for (int i = 0; i < original.size(); i++) {
-            if (original[i] != target[i]) {
-                swaps++;
-
-                // Update position of swapped values
-                int curPos = pos[target[i]];
-                int ori = pos[original[i]];
-                pos[original[i]] = curPos;
-                pos[target[i]] = ori;
-                swap(original[curPos], original[i]);
-            }
-        }
-        return swaps;
+    // Map to track the current index of each value in the array
+    unordered_map<int, int> valueIndexMap;
+    for (int i = 0; i < array.size(); i++) {
+        valueIndexMap[array[i]] = i;
     }
+
+    // Iterate over each position and swap elements into their correct positions
+    for (int i = 0; i < array.size(); i++) {
+        if (array[i] != sortedArray[i]) {
+            swapCount++; // Increment the swap count
+
+            // Get the current and target positions of the value
+            int targetValueIndex = valueIndexMap[sortedArray[i]];
+            int currentValueIndex = valueIndexMap[array[i]];
+
+            // Update the value-to-index mapping
+            valueIndexMap[array[i]] = targetValueIndex;
+            valueIndexMap[sortedArray[i]] = currentValueIndex;
+
+            // Swap the values in the array to place the correct value in position `i`
+            swap(array[targetValueIndex], array[i]);
+        }
+    }
+
+    return swapCount;
+}
+
 };
