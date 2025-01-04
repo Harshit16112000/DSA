@@ -5,6 +5,8 @@ public:
 
         vector<vector<int>> adj(n);
         vector<int> inDegree(n,0);
+
+        // Also, to convert the value to long
         vector<long long> nodeValues(values.begin(), values.end());
 
         for(int i=0;i<edges.size();i++)
@@ -27,9 +29,12 @@ public:
         while (!q.empty()) {
             int cur = q.front();
             q.pop();
+
+            // In My Code Flow, I didn't think of this approach.
+            // Both Curr and neigbor value got decremented.
             inDegree[cur]--;
-            long long addValue = (nodeValues[cur] % k == 0) ? 0 : nodeValues[cur];
-            if (addValue == 0) cnt++;
+            long long addValue =  nodeValues[cur];
+            if (nodeValues[cur] % k == 0)  cnt++;
 
             for (int neighbor : adj[cur]) {
                 if (inDegree[neighbor] > 0) {
