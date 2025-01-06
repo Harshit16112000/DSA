@@ -2,22 +2,25 @@ class Solution {
 public:
     vector<int> minOperations(string boxes) {
         int n = boxes.size();
-        vector<int> ans;
-        vector<int> oneIndex;
+        vector<int> ans(n,0);
+        int cnt = 0;
+        int operations = 0;
 
         for(int i=0;i<n;i++)
         {
-            if(boxes[i] == '1')  oneIndex.push_back(i);
+            ans[i] = operations;
+            cnt += (boxes[i] == '1') ? 1 : 0;
+            operations += cnt;
         }
 
-        for(int i=0;i<n;i++)
+        cnt = 0;
+        operations = 0;
+
+        for(int i=n-1;i>=0;i--)
         {
-            long long cnt = 0;
-            for(int j=0;j<oneIndex.size(); j++)
-            {
-                cnt += (abs(oneIndex[j] - i));
-            }
-            ans.push_back(cnt);
+            ans[i] += operations;
+            cnt += (boxes[i] == '1') ? 1 : 0;
+            operations += cnt;
         }
 
         return ans;
