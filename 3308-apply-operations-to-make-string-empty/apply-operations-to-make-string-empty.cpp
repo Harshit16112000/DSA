@@ -16,7 +16,6 @@ public:
         {
             if(mpp2[s[i]] == maxi)
             {
-                
                 if(mpp[s[i]] == 1)  str.push_back(s[i]);
                 mpp[s[i]]--;
             }
