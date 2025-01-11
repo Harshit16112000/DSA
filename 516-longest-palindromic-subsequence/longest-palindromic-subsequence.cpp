@@ -7,11 +7,13 @@ public:
 
         if(dp[ind1][ind2] != -1)
           return dp[ind1][ind2];
-
+        int ans = 0;
         if(str1[ind1] == str2[ind2])
-         return dp[ind1][ind2] = (1 + solve(ind1-1,ind2-1,str1,str2,dp));
+            ans = (1 + solve(ind1-1,ind2-1,str1,str2,dp));
         
-        return dp[ind1][ind2] = max(solve(ind1-1,ind2,str1,str2,dp),solve(ind1,ind2-1,str1,str2,dp));
+         ans = max({
+            solve(ind1-1,ind2,str1,str2,dp),solve(ind1,ind2-1,str1,str2,dp), ans});
+         return dp[ind1][ind2] = ans;
     }
 
     int longestPalindromeSubseq(string s) {
