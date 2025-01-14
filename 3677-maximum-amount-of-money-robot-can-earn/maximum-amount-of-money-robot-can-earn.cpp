@@ -1,52 +1,37 @@
 class Solution {
 public:
+    long long dp[501][501][3];
+    bool visited[501][501][3];
+    long long helper(int i, int j, int count, vector<vector<int>>& coins) {
+        int n = coins.size(), m = coins[0].size();
+        if (i == coins.size() - 1 && j == coins[0].size() - 1) {
+            if (coins[i][j] < 0 && count > 0)
+                return 0;
+            return coins[i][j];
+        }
+        if (i >= coins.size() || j >= coins[0].size())
+            return INT_MIN;
+
+        if (visited[i][j][count])
+            return dp[i][j][count];
+
+        long long right = INT_MIN, down = INT_MIN;
+
+        right = coins[i][j] + helper(i, j + 1, count, coins);
+        if (count > 0 && coins[i][j] < 0) {
+            right = max(right, helper(i, j + 1, count - 1, coins));
+        }
+
+        down = helper(i + 1, j, count, coins) + coins[i][j];
+        if (count > 0 && coins[i][j] < 0)
+            down = max(down, helper(i + 1, j, count - 1, coins));
+
+        visited[i][j][count] = 1;
+        return dp[i][j][count] = max(right, down);
+    }
     int maximumAmount(vector<vector<int>>& coins) {
-        int m=coins.size();
-        int n=coins[0].size();
-        vector<vector<vector<int>>> dp(m, vector<vector<int>>(n, vector<int>(3, INT_MIN)));
-
-
-        
-        dp[0][0][0]=coins[0][0];
-        if (coins[0][0]<0) {
-            dp[0][0][1]=0; 
-            dp[0][0][2]=0;
-        } else {
-            dp[0][0][1]=dp[0][0][2]=coins[0][0];
-        }
-
-
-        for (int i=0; i<m; ++i) {
-            for (int j=0; j<n; ++j) {
-                // if(k==2) break;
-                for (int k=0; k<3; ++k) {
-                    if (i==0 && j==0) continue; 
-                    // int coins[i][j]=coins[i][j];
-
-                        // cout<<dp[i][j][k];
-                        // cout<<coins[i][j];
-                    
-                    if (i>0) {
-                        dp[i][j][k]=max(dp[i][j][k], dp[i-1][j][k]+coins[i][j]);
-                        if (coins[i][j]<0 && k>0) {
-                            dp[i][j][k]=max(dp[i][j][k],dp[i-1][j][k-1]); 
-                            
-                        // cout<<dp[i][j][k];
-                        }
-                    }
-
-                    if (j>0) {
-                        // cout<<dp[i][j][k];
-                        dp[i][j][k]=max(dp[i][j][k], dp[i][j-1][k]+coins[i][j]);
-                        if (coins[i][j]<0 && k>0)
-                        {
-                            dp[i][j][k]=max(dp[i][j][k], dp[i][j-1][k-1]); 
-                        
-                        }
-                    }
-                }
-            }
-        }
-        return max({dp[m-1][n-1][0], dp[m-1][n-1][1], dp[m-1][n-1][2]});
+        memset(dp, -1, sizeof(dp));
+        memset(visited, 0, sizeof(visited));
+        return helper(0, 0, 2, coins);
     }
 };
