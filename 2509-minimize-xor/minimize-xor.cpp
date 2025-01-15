@@ -5,9 +5,10 @@ public:
         int result = 0;
         for(int i=31; i>=0 && setBits >0 ; i--)
         {
+            // Check if ith Bit is set or not.
             if(num1 & (1 << i))
             {
-                result |=  (1 << i);
+                result = result |  (1 << i);
                 setBits--;
             }
         }
@@ -16,7 +17,7 @@ public:
         {
             if(!(result & (1 <<i)))
             {
-                result |=  (1 << i);
+                result = result | (1 << i);
                 setBits--;
             }
         }
