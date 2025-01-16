@@ -10,7 +10,10 @@ public:
         if(uset.size() != str.size())  return 0;
         if(index >= arr.size())  return str.size();
 
-        int take = solve(arr,index+1, str + arr[index]);
+        for(char c: arr[index])   str.push_back(c);
+        int take = solve(arr,index+1, str );
+        
+        for(char c: arr[index])   str.pop_back();
         int nontake = solve(arr, index+1, str);
 
         return max(take, nontake);
