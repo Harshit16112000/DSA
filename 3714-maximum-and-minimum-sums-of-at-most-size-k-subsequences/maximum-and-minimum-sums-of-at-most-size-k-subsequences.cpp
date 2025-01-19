@@ -12,7 +12,7 @@ ll modPow(ll base, ll exp, int mod) {
         if (exp % 2 == 1)
             result = result * base % mod;
         base = base * base % mod;
-        exp = exp >> 1;
+        exp = exp /2;
     }
     cout << result << " ";
     return result;
