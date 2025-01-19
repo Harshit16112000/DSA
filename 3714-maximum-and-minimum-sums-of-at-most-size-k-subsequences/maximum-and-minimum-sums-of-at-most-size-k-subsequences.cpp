@@ -45,8 +45,9 @@ public:
         sort(nums.begin(), nums.end());
         computeFactorials(n);
         ll result = 0;
+         for (int size = 1; size <= k; size++) {
         for (int i = 0; i < n; i++) {
-            for (int size = 1; size <= k; size++) {
+            
                 ll minContribution = nums[i] * nCr(n - i - 1, size - 1) % MOD;
                 ll maxContribution = nums[i] * nCr(i, size - 1) % MOD;
                 result = (result + minContribution + maxContribution) % MOD;
