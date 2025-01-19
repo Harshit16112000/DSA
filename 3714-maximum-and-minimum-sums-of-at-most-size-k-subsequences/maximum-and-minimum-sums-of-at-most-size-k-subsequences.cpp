@@ -2,14 +2,19 @@
 const int MOD = 1e9 + 7;
 vector<ll> fact, invFact;
 
+// With the help of Fermi Therom, we are calculating InverseFactorial
+// InvFac(i) = invfac(i+1) * (i+1)
+
+// base power exp == 1%mod
 ll modPow(ll base, ll exp, int mod) {
     ll result = 1;
     while (exp > 0) {
         if (exp % 2 == 1)
             result = result * base % mod;
         base = base * base % mod;
-        exp >>= 1;
+        exp = exp >> 1;
     }
+    cout << result << " ";
     return result;
 }
 
