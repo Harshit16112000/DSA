@@ -17,7 +17,8 @@ public:
             int current_val = it->first; // Current value in sorted order
             int current_idx = it->second; // Original index of this value
             
-            if (sortedarr.empty() || abs(current_val - sortedarr.back()) <= limit) {
+            // Missed to check with sortedarr.empty()
+            if (sortedarr.empty() || current_val - sortedarr.back() <= limit) {
                 // Add to current group
                 sortedarr.push_back(current_val);
                 IndexArr.push_back(current_idx);
@@ -30,6 +31,8 @@ public:
                 sortedarr.clear();
                 IndexArr.clear();
                 // Start a new group
+
+                // I have missed to add this part
                 sortedarr.push_back(current_val);
                 IndexArr.push_back(current_idx);
             }
@@ -37,6 +40,7 @@ public:
         }
 
         // Handle the last group
+        // ALso, missed this part
         if (!sortedarr.empty()) {
             sort(IndexArr.begin(), IndexArr.end());
             for (int i = 0; i < sortedarr.size(); i++) {
