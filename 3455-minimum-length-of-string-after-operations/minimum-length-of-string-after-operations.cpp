@@ -8,19 +8,18 @@ public:
         }
 
         // Step 2: Calculate the number of characters to delete
-        int deleteCount = 0;
+        int cnt = 0;
         for (auto& pair : charFrequencyMap) {
             int frequency = pair.second;
             if (frequency % 2 == 1) {
                 // If frequency is odd, delete all except one
-                deleteCount += frequency - 1;
+                cnt++;
             } else {
                 // If frequency is even, delete all except two
-                deleteCount += frequency - 2;
+                cnt = cnt+2;
             }
         }
 
-        // Step 3: Return the minimum length after deletions
-        return s.length() - deleteCount;
+        return cnt;
     }
 };
