@@ -6,7 +6,7 @@ public:
 
     int solve(vector<string>&arr, int index, string str)
     {
-        unordered_set<char> uset(str.begin(), str.end());
+        set<char> uset(str.begin(), str.end());
         if(uset.size() != str.size())  return 0;
         if(index >= arr.size())  return str.size();
 
