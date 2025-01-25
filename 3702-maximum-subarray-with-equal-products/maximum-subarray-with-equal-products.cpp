@@ -28,7 +28,7 @@ public:
                     break; // Avoid overflow
                 }
                 product *= (nums[j]);
-                if(product == 1LL * gc * lc)  
+                if(product ==  gc * lc)  
                 result = max(result,j-i+1);
             }
         }
