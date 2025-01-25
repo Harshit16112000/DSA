@@ -1,46 +1,46 @@
 class Solution {
 public:
-    void DFS(vector<int> &vis,int index,string &s, string &stx,vector<int>& tempans,
-    vector<vector<int>>& graph)
-    {
-        vis[index] = 1;
-        stx += s[index];
-        tempans.push_back(index);
-        for(auto it: graph[index])
-        {
-            if(!vis[it])
-              DFS(vis,it,s,stx,tempans, graph);
+    void DFS(vector<int> &visited, int currentNode, string &inputString, string &componentChars, 
+             vector<int> &componentIndices, vector<vector<int>> &adjList) {
+        visited[currentNode] = 1;                // Mark the current node as visited
+        componentChars += inputString[currentNode];  // Add the character to the component
+        componentIndices.push_back(currentNode);    // Add the index to the component
+        
+        for (auto neighbor : adjList[currentNode]) { // Traverse all neighbors
+            if (!visited[neighbor]) {
+                DFS(visited, neighbor, inputString, componentChars, componentIndices, adjList);
+            }
         }
     }
 
-    string smallestStringWithSwaps(string s, vector<vector<int>>& pairs) {
-        vector<vector<int>> graph(s.size());
-        for(int i=0;i<pairs.size();i++)
-        {
-            graph[pairs[i][0]].push_back(pairs[i][1]);
-            graph[pairs[i][1]].push_back(pairs[i][0]);
+    string smallestStringWithSwaps(string inputString, vector<vector<int>>& swapPairs) {
+        int n = inputString.size();
+        vector<vector<int>> adjList(n);   
+        
+        for (int i = 0; i < swapPairs.size(); i++) {
+            adjList[swapPairs[i][0]].push_back(swapPairs[i][1]);
+            adjList[swapPairs[i][1]].push_back(swapPairs[i][0]);
         }
 
-        vector<int> vis(s.size() , 0);
-        string ans;
+        vector<int> visited(n, 0);       
+        
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {           
+                string componentChars = "";       // To store characters in the current 
+                vector<int> componentIndices;     // To store indices in the current component
+                
+                
+                DFS(visited, i, inputString, componentChars, componentIndices, adjList);
+                
+                sort(componentIndices.begin(), componentIndices.end());
+                sort(componentChars.begin(), componentChars.end());
 
-        for(int i=0;i<s.size();i++)
-        {
-            if(!vis[i])
-            {
-                string stx = "";
-                vector<int> tempans;
-                DFS(vis,i,s,stx,tempans, graph);
-            
-                sort(tempans.begin(), tempans.end());
-                sort(stx.begin(), stx.end());
-
-                for(int j=0;j<stx.size();j++){
-                    s[tempans[j]]=stx[j];
+                for (int j = 0; j < componentIndices.size(); j++) {
+                    inputString[componentIndices[j]] = componentChars[j];
                 }
             }
         }
-        return s;
 
+        return inputString;
     }
 };
