@@ -1,8 +1,8 @@
 class Solution {
 public:
     long long solve(int i, int j, vector<vector<int>>& coins,
-              vector<vector<vector<int>>>& dp, int k,
-              vector<vector<vector<int>>>& visited) {
+                    vector<vector<vector<int>>>& dp, int k,
+                    vector<vector<vector<int>>>& visited) {
 
         if (i >= coins.size() || j >= coins[0].size())
             return INT_MIN;
@@ -18,14 +18,13 @@ public:
         long long right = INT_MIN, down = INT_MIN;
 
         right = coins[i][j] + solve(i, j + 1, coins, dp, k, visited);
-        if (k > 0 && coins[i][j] < 0) 
-        {
-            right = max(right, solve(i, j + 1,coins, dp, k - 1, visited));
+        if (k > 0 && coins[i][j] < 0) {
+            right = max(right, solve(i, j + 1, coins, dp, k - 1, visited));
         }
 
         down = solve(i + 1, j, coins, dp, k, visited) + coins[i][j];
         if (k > 0 && coins[i][j] < 0)
-            down = max(down, solve(i + 1, j,coins, dp, k - 1, visited));
+            down = max(down, solve(i + 1, j, coins, dp, k - 1, visited));
 
         visited[i][j][k] = 1;
         return dp[i][j][k] = max(right, down);
