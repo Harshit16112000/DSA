@@ -24,7 +24,7 @@ public:
             } else {
                 // Process current group and start a new one
                 sort(IndexArr.begin(), IndexArr.end());
-                for (size_t i = 0; i < sortedarr.size(); i++) {
+                for (int i = 0; i < sortedarr.size(); i++) {
                     ans[IndexArr[i]] = sortedarr[i];
                 }
                 sortedarr.clear();
@@ -39,7 +39,7 @@ public:
         // Handle the last group
         if (!sortedarr.empty()) {
             sort(IndexArr.begin(), IndexArr.end());
-            for (size_t i = 0; i < sortedarr.size(); i++) {
+            for (int i = 0; i < sortedarr.size(); i++) {
                 ans[IndexArr[i]] = sortedarr[i];
             }
         }
