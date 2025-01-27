@@ -1,54 +1,44 @@
 class Solution {
 public:
     vector<bool> checkIfPrerequisite(int numCourses, vector<vector<int>>& prerequisites, vector<vector<int>>& queries) {
+
+        // Normal BFS traversl -> 0(V+E) -> 0(n + n2) -> 0(n2) = 1e4
+        // For each quesries 
+        //  BFS * queries ->  q * qe4 ==> 1e4*1e4  ==> 1e8(Risky)
         // Transitive closure matrix
-        vector<vector<bool>> isPrerequisite(numCourses, vector<bool>(numCourses, false));
-
-        // Build adjacency list
-        vector<vector<int>> adjMat(numCourses);
-        for (const auto& prereq : prerequisites) {
-            adjMat[prereq[0]].push_back(prereq[1]);
+        vector<vector<int>> gr(numCourses);
+        vector<int> indegree(numCourses, 0);
+        
+        for (const auto& edge : prerequisites) {
+            gr[edge[0]].push_back(edge[1]);
+            indegree[edge[1]]++;
         }
-
-        // Topological sort with BFS
-        vector<int> inDegree(numCourses, 0);
-        for (const auto& prereq : prerequisites) {
-            inDegree[prereq[1]]++;
-        }
-
+        
         queue<int> q;
-        for (int i = 0; i < numCourses; i++) {
-            if (inDegree[i] == 0) {
-                q.push(i);
-            }
+        for (int i = 0; i < numCourses; ++i) {
+            if (indegree[i] == 0) q.push(i);
         }
-
+        
+        vector<unordered_set<int>> nodePrerequisites(numCourses);
+        
         while (!q.empty()) {
-            int course = q.front();
+            int node = q.front();
             q.pop();
-
-            for (int nextCourse : adjMat[course]) {
-                // Update transitive closure matrix
-                isPrerequisite[course][nextCourse] = true;
-                for (int i = 0; i < numCourses; i++) {
-                    if (isPrerequisite[i][course]) {
-                        isPrerequisite[i][nextCourse] = true;
-                    }
+            
+            for (int adj : gr[node]) {
+                nodePrerequisites[adj].insert(node);
+                for (int prereq : nodePrerequisites[node]) {
+                    nodePrerequisites[adj].insert(prereq);
                 }
-
-                inDegree[nextCourse]--;
-                if (inDegree[nextCourse] == 0) {
-                    q.push(nextCourse);
-                }
+                if (--indegree[adj] == 0) q.push(adj);
             }
         }
-
-        // Process queries
-        vector<bool> result;
+        
+        vector<bool> answer;
         for (const auto& query : queries) {
-            result.push_back(isPrerequisite[query[0]][query[1]]);
+            answer.push_back(nodePrerequisites[query[1]].count(query[0]));
         }
-
-        return result;
+        
+        return answer;
     }
 };
