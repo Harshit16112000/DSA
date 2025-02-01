@@ -1,36 +1,61 @@
-class Solution {
+class DSU {
 public:
+    vector<int> rank;
+    vector<int> parent;
 
-    void dfs(int node, vector<int> adj[], vector<int> &vis){
-        vis[node]=1;
-        for(auto i:adj[node]){
-            if(vis[i]==0)
-                dfs(i,adj,vis);
+    DSU(int number) {
+        rank.resize(number, 0);
+        parent.resize(number, 0);
+        for (int i = 0; i < number; i++) {
+            parent[i] = i;
         }
     }
 
-    int findCircleNum(vector<vector<int>>& graph) {
-        int v = graph.size();
-        vector<int> adj[v];
-        // create a adjacency list
+    int findParent(int v) {
+        if (v == parent[v])
+            return v;
 
-        for(int i = 0; i<v;i++){
-            for(int j = 0 ; j<v; j++){
-                if(graph[i][j]==1 && i!=j){
-                    adj[i].push_back(j);
-                    
-                }
+        return findParent(parent[v]);
+    }
+
+    void Union(int u, int v) {
+        int alt_u = findParent(u);
+        int alt_v = findParent(v);
+        if (alt_u != alt_v) {
+            if (rank[alt_u] > rank[alt_v]) {
+                parent[alt_v] = alt_u;
+            } else if (rank[alt_v] > rank[alt_u]) {
+                parent[alt_u] = alt_v;
+            } else {
+                parent[alt_u] = alt_v;
+                rank[alt_v]++;
+            }
+        }
+    }
+};
+
+class Solution {
+public:
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int n = isConnected.size();
+        int cnt = 0;
+        DSU* dsu = new DSU(n);
+
+        for(int i=0;i<n;i++)
+        {
+            for(int j=i+1;j<n;j++)
+            {
+                if(isConnected[i][j])
+                   dsu->Union(i,j);
             }
         }
 
-        vector<int> vis(v,0);
-        int c = 0;
-        for(int i = 0; i<v; i++){
-            if(vis[i]==0){
-                c++;
-                dfs(i,adj,vis);
-            }
+        for(int i=0;i<dsu->parent.size();i++)
+        {
+            if(dsu->parent[i] == i)
+              cnt++;
         }
-        return c;
+
+        return cnt;
     }
 };
