@@ -15,7 +15,7 @@ public:
         if (v == parent[v])
             return v;
 
-        return findParent(parent[v]);
+        return parent[v] = findParent(parent[v]);
     }
 
     void Union(int u, int v) {
