@@ -1,97 +1,21 @@
 class Solution {
 public:
     int maxDistance(string s, int k) {
-        int result = 0;
-        int curr = 0;
-        int temp = k;
-
-        // change for north east
-        for(int i=0;i<s.size();i++)
-        {
-            if(s[i] == 'N' || s[i] == 'E')
-            {
-                if(temp > 0)
-                {
-                    temp--;
+        int ans = 0;
+        char dir[4][2] = {{'N', 'E'}, {'N', 'W'}, {'S', 'E'}, {'S', 'W'}};
+        for (auto d : dir) {
+            for (int i = 0, curr = 0, t = k; i < s.size(); ++i) {
+                if (s[i] == d[0] || s[i] == d[1]) {
+                    if (t > 0) {
+                        t--;
+                        curr++;
+                    } else
+                        curr--;
+                } else
                     curr++;
-                }
-                else {
-                    curr--;
-                }
+                ans = max(ans, curr);
             }
-            else 
-              curr++;
-            result = max(result, curr);
         }
-        
-
-        // Change for sout east
-        curr = 0;
-        temp = k;
-        for(int i=0;i<s.size();i++)
-        {
-            if(s[i] == 'S' || s[i] == 'E')
-            {
-                if(temp > 0)
-                {
-                    temp--;
-                    curr++;
-                }
-                else {
-                    curr--;
-                }
-            }
-            else 
-                curr++;
-            result = max(result, curr);
-        }
-        
-
-
-        // Change for south west
-        temp = k;
-        curr = 0;
-        for(int i=0;i<s.size();i++)
-        {
-            if(s[i] == 'S' || s[i] == 'W')
-            {
-                if(temp > 0)
-                {
-                    temp--;
-                    curr++;
-                }
-                else {
-                    curr--;
-                }
-            }
-            else {
-                curr++;
-            }
-            result = max(result, curr);
-        }
-        
-
-        // Change for north west
-        temp = k;
-        curr = 0;
-        for(int i=0;i<s.size();i++)
-        {
-            if(s[i] == 'N' || s[i] == 'W')
-            {
-                if(temp > 0)
-                {
-                    temp--;
-                    curr++;
-                }
-                else {
-                    curr--;
-                }
-            }
-            else {
-                curr++;
-            }
-            result = max(result, curr);
-        }      
-        return result;
+        return ans;
     }
 };
