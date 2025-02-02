@@ -54,6 +54,7 @@ public:
             }
         }
 
+        // Didn't come up to use set<string> as value  
         unordered_map<int, set<string>> mergedAccounts;
         for (auto& [email, idx] : mpp) {
             int root = dsu->findParent(idx);
