@@ -36,7 +36,7 @@ class DSU {
 class Solution {
 public:
     vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
-        unordered_map<string, int> mpp;
+        map<string, int> mpp;
         vector<vector<string>> result;
         DSU *dsu = new DSU(accounts.size());
         for(int i=0;i<accounts.size(); i++)
