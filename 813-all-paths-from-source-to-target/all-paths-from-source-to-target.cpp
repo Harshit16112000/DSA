@@ -10,9 +10,10 @@ public:
             for (auto it : graph[node]) {
 
                 DFS(it, graph, path, result);
+                path.pop_back();
             }
         }
-        path.pop_back();
+        
     }
     vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
         vector<vector<int>> result;
