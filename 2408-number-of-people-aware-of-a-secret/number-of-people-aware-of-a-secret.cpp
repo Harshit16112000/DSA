@@ -2,11 +2,13 @@ class Solution {
 public:
     #define ll long long
     int peopleAwareOfSecret(int n, int delay, int forget) {
+        // Was able to came up with this logic.
      vector<int> dp(n+1, 0);
      dp[0] = 1;
     int mod = 1000000007;
      for(int i=0;i<n;i++)
      {
+        // Missed this part.
         if(dp[i] == 0)  continue;
 
         for(int j = i + delay; j < n && (j-i) < forget; j++)
