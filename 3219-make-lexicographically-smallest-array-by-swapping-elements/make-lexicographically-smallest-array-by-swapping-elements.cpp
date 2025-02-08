@@ -12,6 +12,7 @@ public:
         vector<int> sortedarr;    // Current group of sorted numbers
         vector<int> IndexArr;     // Indices corresponding to the current group
 
+        // ANother way to iterate it.
         auto it = mp.begin(); // Iterate through sorted numbers
         while (it != mp.end()) {
             int current_val = it->first; // Current value in sorted order
