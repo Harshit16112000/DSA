@@ -9,6 +9,8 @@ public:
         }
         vector<int> ans(groups.size(), INT_MAX);
 
+
+        
         for(int i=0;i<groups.size();i++)
         {
             for(int j=1;j*j<=groups[i];j++)
