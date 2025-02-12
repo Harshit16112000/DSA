@@ -1,5 +1,7 @@
 class Solution {
 public:
+    // Since, each number is reached one time, only, so, TC- 0(N)
+    // Space Complexity. The depth till which we are going in 0(number of digit in N = log10N) only. Not more than that.
     void solve(int i, int n, vector<int> & result)
     {
         if(i > n)  return ;
@@ -13,7 +15,7 @@ public:
         }
         return;
     }
-
+    
     vector<int> lexicalOrder(int n) {
         vector<int> result;
         for(int i=1;i<=9;i++)
