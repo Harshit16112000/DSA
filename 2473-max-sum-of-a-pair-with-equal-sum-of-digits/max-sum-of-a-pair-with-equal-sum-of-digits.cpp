@@ -13,11 +13,9 @@ public:
                 nums[i] = nums[i]/10;
             }
             cnt += nums[i];
-            //cout << cnt << " ";
             mpp[cnt].insert(vari);
         }
-        //cout << endl;
-
+        
         int maxi = -1;
         for(auto &[key,value] : mpp)
         {
@@ -25,7 +23,7 @@ public:
             {
                auto it = value.rbegin();
                 int largest = *it;
-                int secondLargest = *(++it);
+                int secondLargest = *++(it);
                 maxi = max(maxi, largest + secondLargest);
             }
         }
