@@ -11,7 +11,8 @@ public:
             else if(s[1] >= mid)     upper += (double)s[2] * (double)s[2];
             else {
                 lower += (mid - (double)s[1]) * (double)s[2];
-                upper += ((double)s[1] + (double)s[2] - mid)*(double)s[2]; //(double)s[2] * (double)s[2] - lower;
+                double lowersquare = (mid - (double)s[1]) * (double)s[2];
+                upper += (double)s[2] * (double)s[2] - lowersquare;
             }
         }
 
