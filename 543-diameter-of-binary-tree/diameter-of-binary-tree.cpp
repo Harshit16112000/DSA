@@ -12,17 +12,23 @@
 class Solution {
 public:
     int diameterOfBinaryTree(TreeNode* root) {
-        int ans = 0;
-         diameter(root, ans);
-         return ans;
+        int res = INT_MIN;
+        diameter(root, res);
+        return res-1;
     }
 
-    int diameter(TreeNode* root,int& maxi){
+    int diameter(TreeNode *root, int& res)
+    {
         if(root == NULL)  return 0;
+        int left = diameter(root->left, res);
+        int right = diameter(root->right, res);
+          // It just passes the node to upper node
+          int temp = 1 + max(left, right);
 
-        int lh = diameter(root->left, maxi);
-        int rh = diameter(root->right, maxi);
-        maxi = max(maxi, lh + rh);
-        return 1 + max(lh,rh);
+          // Can this node be ans
+          int ans =  max(temp, 1 +  left + right);
+          
+          res = max(ans, res);
+        return temp;
     }
 };
