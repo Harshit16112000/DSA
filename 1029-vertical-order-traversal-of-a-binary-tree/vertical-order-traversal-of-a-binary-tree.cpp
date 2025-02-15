@@ -36,11 +36,26 @@ public:
             
         }
 
+        for(auto &[key,value] : mpp)
+        {   
+            cout << key << " ";
+            for(auto &[key1, values1]: value)
+            {
+                cout << key1 << " ";
+                for(auto it: values1)
+                {
+                    cout << it << " ";
+                }
+            }
+            cout << endl;
+        }
+
         for(auto it: mpp)
         {
             vector<int> col;
             for(auto i : it.second)
             {
+                
                 col.insert(col.end(), i.second.begin(), i.second.end());
             }
             result.push_back(col);
