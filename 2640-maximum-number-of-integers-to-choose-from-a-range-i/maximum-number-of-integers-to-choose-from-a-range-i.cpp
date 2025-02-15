@@ -1,7 +1,9 @@
 class Solution {
 public:
     int maxCount(vector<int>& banned, int n, int maxSum) {
-        vector<int> unbannedElement;
+
+        int sum = 0;
+        int cnt = 0;        
         set<int> st;
         for(int i=0;i<banned.size();i++)
         {
@@ -13,17 +15,11 @@ public:
         {
             if(st.contains(i))
                   continue;
-            unbannedElement.push_back(i);
-        }
-
-        int sum = 0;
-        int cnt = 0;
-        for(int i=0;i<unbannedElement.size();i++)
-        {
-            sum  += unbannedElement[i];
-            
+            sum += i;
             if(sum <= maxSum)
-              cnt++;
+            {
+                cnt++;
+            }
         }
         return cnt;
     }
