@@ -13,33 +13,30 @@ class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
         vector<int> ans;
+
         if(root == NULL)  return ans;
 
         TreeNode* node = root;
         stack<TreeNode*> st;
-
         while(true)
         {
             if(node != NULL)
-             {
+            {
                 st.push(node);
-                node = node-> left;
-             }
-             else {
-                if(st.size() == 0)   break;
+                node = node->left;
+            }
+            else {
+                if(st.size() == 0) break;
+
+                // At time of Revision, I have assigned hee, new Node.
                 node = st.top();
                 st.pop();
-
                 ans.push_back(node->val);
+            
                 node = node->right;
-             }
+            }
         }
 
         return ans;
-
-
-
-
-        
     }
 };
