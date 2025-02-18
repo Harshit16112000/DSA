@@ -12,8 +12,10 @@ public:
                 if(used[i])  continue;
                 used[i] = true;
                 subsequence[index] = i;
+                // I have missed to return true
                 if(solve(subsequence, pattern, index+1, used)) return true;
                 used[i] = false;
+                subsequence[index] = 0;
             }
         }
 
@@ -26,6 +28,7 @@ public:
                 subsequence[index] = i;
                 if(solve(subsequence, pattern, index+1, used)) return true;
                 used[i] = false;
+                subsequence[index] = 0;
             }
         }
 
