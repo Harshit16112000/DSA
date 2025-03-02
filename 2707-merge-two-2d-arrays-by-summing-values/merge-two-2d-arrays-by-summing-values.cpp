@@ -22,7 +22,6 @@ public:
 
         for(auto &[key,value] : mp)
         {
-            vector<int> result;
             ans.push_back({key,value});
         }
         return ans;
