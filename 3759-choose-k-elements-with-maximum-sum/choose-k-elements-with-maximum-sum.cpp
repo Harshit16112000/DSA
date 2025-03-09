@@ -12,12 +12,8 @@ public:
 
         for (auto& [value, indexList] : indices) {
                 for (int index : indexList) {
-                if (indexList[0] != index) {
-                    ans[index] = ans[indexList[0]];
-                } else {
                     ans[index] = sum;  // Store the sum of top k elements
                 }
-            }
 
             for (int index : indexList) {
                 minHeap.push(nums2[index]);
