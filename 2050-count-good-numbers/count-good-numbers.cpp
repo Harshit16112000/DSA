@@ -1,13 +1,20 @@
 class Solution {
 public:
      const int MOD = 1e9 + 7;
-     long long power(long long base, long long exp) {
+     long long power(long long x, long long power) {
         long long result = 1;
-        while (exp > 0) {
-            if (exp % 2 == 1)
-                result = (result * base) % MOD;
-            base = (base * base) % MOD;
-            exp /= 2;
+       while(power > 0)
+        {
+            if(power%2 == 1)
+            {
+                result = (result * x) % MOD;
+                power = power-1;
+            }
+            else 
+            {
+                power = power/2;
+                x = (x * x) % MOD;
+            }
         }
         return result;
     }
