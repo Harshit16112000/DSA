@@ -9,11 +9,7 @@ public:
     }
 
     void primes(int n, set<int>& st) {
-                // Handle factor 2
-        
-
-        // Handle odd factors from 3 to sqrt(n)
-        for (int i = 2; i  <= n; i += 1) {
+        for (int i = 2; i <= n; i += 1) {
             while (n % i == 0) {
                 st.insert(i);
                 n /= i;
