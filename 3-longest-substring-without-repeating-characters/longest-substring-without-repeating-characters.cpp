@@ -10,11 +10,8 @@ public:
         {
             if(st.contains(s[r]))
             {
-                while(st.contains(s[r]))
-                {
-                    st.erase(s[l]);
-                    l++;
-                }
+                st.erase(s[l]);
+                l++;
             }
             else {
                 st.insert(s[r]);
