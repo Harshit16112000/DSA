@@ -10,7 +10,6 @@ public:
                 numcnt++;
             }
             if (numcnt % 2 == 0) {
-                cout << i;
                 cnt++;
             }
         }
