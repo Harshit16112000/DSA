@@ -1,44 +1,48 @@
 class Solution {
 public:
     int minDominoRotations(vector<int>& tops, vector<int>& bottoms) {
-        vector<int> topValue = getMaxiValue(tops);
-        int result1 = tops.size() - topValue[1];
-        for(int i=0;i<tops.size();i++)
-        {
-            if(tops[i] == topValue[0] || bottoms[i] == topValue[0])
-              continue;
-            result1 = -1;
+        vector<int> topCandidate = getMostFrequentValue(tops);
+        int topRotations = tops.size() - topCandidate[1];
+
+        for(int i = 0; i < tops.size(); i++) {
+            if (tops[i] == topCandidate[0] || bottoms[i] == topCandidate[0])
+                continue;
+            topRotations = -1;
+            break;
         }
 
-        vector<int> bottomValue = getMaxiValue(bottoms);
-        int result2 = bottoms.size() - bottomValue[1];
-        for(int i=0;i<bottoms.size();i++)
-        {
-            if(tops[i] == bottomValue[0] || bottoms[i] == bottomValue[0])
-              continue;
-            result2 = -1;
+        vector<int> bottomCandidate = getMostFrequentValue(bottoms);
+        int bottomRotations = bottoms.size() - bottomCandidate[1];
+
+        for(int i = 0; i < bottoms.size(); i++) {
+            if (tops[i] == bottomCandidate[0] || bottoms[i] == bottomCandidate[0])
+                continue;
+            bottomRotations = -1;
+            break;
         }
 
-        if(result1 == -1 && result2 == -1)  return -1;
-        if(result1 == -1)  return result2;
-        if(result2 == -1)  return result1;
-        return min( (tops.size() - topValue[1]), bottoms.size() - bottomValue[1]);        
+        if (topRotations == -1 && bottomRotations == -1) return -1;
+        if (topRotations == -1) return bottomRotations;
+        if (bottomRotations == -1) return topRotations;
+
+        return min(topRotations, bottomRotations);
     }
 
-    vector<int> getMaxiValue(vector<int>& arr) {
-        map<int, int> mpp;
+    vector<int> getMostFrequentValue(vector<int>& arr) {
+        map<int, int> freqMap;
 
-        for (auto it : arr)
-            mpp[it]++;
-        int maxi = 0;
-        int num = 0;
-        for (auto& [key, value] : mpp) {
-            if(value > maxi)
-            {
-            maxi = max(maxi, value);
-            num = key;
+        for (int val : arr)
+            freqMap[val]++;
+
+        int maxFreq = 0;
+        int candidateValue = 0;
+        for (auto& [key, value] : freqMap) {
+            if (value > maxFreq) {
+                maxFreq = value;
+                candidateValue = key;
             }
         }
-        return  {num, maxi};
+
+        return {candidateValue, maxFreq};
     }
 };
