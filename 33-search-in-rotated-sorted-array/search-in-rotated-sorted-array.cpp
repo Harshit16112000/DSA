@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int low=0;
+        int high=nums.size()-1;
+
+        while(low<=high)
+        {
+            int mid = low + (high-low)/2;
+            cout << nums[mid] << " ";
+            if(nums[mid] == target)  return mid;
+            if(nums[low] <= nums[mid])  // left side is sorted
+            {
+                if(target >= nums[low] && nums[mid] >= target)
+                {
+                    high = mid - 1;
+                }
+                else {
+                    low = mid + 1;
+                }
+            }
+            else { // Right Side is sorted
+                if(target <= nums[high] && nums[mid] <= target)
+                {
+                    low = mid + 1;
+                }
+                else {
+                    high = mid - 1;
+                }
+            }
+        }
+        return -1;
+    }
+};
