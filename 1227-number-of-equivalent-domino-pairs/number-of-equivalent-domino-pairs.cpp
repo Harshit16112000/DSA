@@ -7,8 +7,8 @@ public:
             int a = min(d[0], d[1]), b = max(d[0], d[1]);
             mp[{a, b}]++;
         }
-        for (auto&[key,it] : mp) {
-            count += it * (it - 1) / 2;
+        for (auto&[key,value] : mp) {
+            count += value * (value - 1) / 2;
         }
         return count;
     }
