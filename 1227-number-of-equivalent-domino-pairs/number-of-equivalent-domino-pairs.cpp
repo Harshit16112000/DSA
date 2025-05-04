@@ -1,23 +1,15 @@
 class Solution {
 public:
     int numEquivDominoPairs(vector<vector<int>>& dominoes) {
-        int cnt = 0;
-        map<int,int> mpp;
-
-        for(int i=0;i<dominoes.size();i++)
-        {
-            int a = min(dominoes[i][0], dominoes[i][1]);
-            int b = max(dominoes[i][0], dominoes[i][1]);
-
-            int key = a * 10 + b; // Encode pair uniquely
-
-            cnt += mpp[key];
-            mpp[key]++;
-             
+        map<pair<int, int>, int> mp;
+        int count = 0;
+        for (auto& d : dominoes) {
+            int a = min(d[0], d[1]), b = max(d[0], d[1]);
+            mp[{a, b}]++;
         }
-
-        
-
-        return cnt;
+        for (auto&[key,it] : mp) {
+            count += it * (it - 1) / 2;
+        }
+        return count;
     }
 };
