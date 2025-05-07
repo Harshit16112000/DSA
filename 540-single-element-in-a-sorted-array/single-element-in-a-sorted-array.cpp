@@ -1,12 +1,33 @@
 class Solution {
 public:
     int singleNonDuplicate(vector<int>& nums) {
-        int xor1 = 0;
-
-        for(int i=0;i<nums.size();i++)
+        int low=0;
+        int high=nums.size()-1;
+        int mid = low + (high-low)/2;
+            
+        while(low<=high)
         {
-            xor1 = xor1 ^ nums[i];
+            mid = low + (high-low)/2;
+            if(mid%2 == 0)
+            {
+                if(mid >0 && nums[mid] == nums[mid-1])
+                {
+                    high = mid - 1;    
+                }
+                else {
+                    low = mid + 1;
+                }
+            }else {
+                if(mid > 0 && nums[mid] == nums[mid-1])
+                {
+                    low = mid + 1;
+                }
+                else {
+                    high = mid - 1;
+                }
+            }
         }
-        return xor1;
+            return nums[low-1];   
+        
     }
 };
