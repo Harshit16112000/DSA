@@ -1,42 +1,37 @@
 class Solution {
 public:
-    bool check(const vector<int>& piles, int k, int h) 
-    { 
-        int cnt = 0; 
-        for(int i = 0; i < piles.size(); i++)
-         {
-             cnt += (piles[i] + k - 1) / k;
-              // This is a more efficient way to 
-              //calculate the ceiling 
-              if(cnt > h) return false; 
-              } 
-        return true; 
-        }
-
-    int minEatingSpeed(vector<int>& piles, int h) {
-        int l = 1;
-        int r = 0;
-        int sum = 0;
+    bool checkSpeed(vector<int>& piles, int mid, int h)
+    {
+        int cnt = 0;
         for(int i=0;i<piles.size();i++)
         {
-            r = max(r,piles[i]);
-        } 
-        
-        int ans= r;
+            if(piles[i]%mid == 0)  cnt+= piles[i]/mid;
+            else  cnt += piles[i]/mid + 1;
 
-        while(l <= r)
+            if(cnt > h )  return true;
+         }
+         return false;
+    } 
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int low = 1;
+        int high = 0;
+        for(int i=0;i<piles.size();i++)
         {
-            int mid = l + (r-l)/2;
-            if(check(piles,mid,h))
+            high = max(high, piles[i]);
+        }
+        int mid = 0;
+        while(low <= high)
+        {
+            mid = low + (high-low)/2;
+            if(checkSpeed(piles,mid,h))
             {
-                ans = mid;
-                r = mid - 1;
+                low = mid + 1;
             }
             else {
-                l = mid + 1;
+                high = mid - 1;
             }
         }
 
-        return ans;
+        return low;
     }
 };
