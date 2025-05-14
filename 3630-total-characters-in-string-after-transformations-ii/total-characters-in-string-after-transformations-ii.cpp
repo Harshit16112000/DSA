@@ -26,19 +26,24 @@ public:
             freq[s[i] - 'a']++;
         }
         vector<vector<int>> matrix(26, vector<int>(26));
+        // Generate the transport Matrix for matirx.
         for(int i = 0; i < 26; i++) {
             for(int j = 1; j <= nums[i]; j++) {
                 matrix[i][(i + j) % 26]++;
             }
         }
+
+        
         matrix = matrixFastMult(matrix, t);
+        // It will generate the Transport matrix.
+
         int ans = 0;
         for(int i = 0; i < 26; i++) {
             int sum = 0;
             for(int j = 0; j < 26; j++) {
-                sum = (sum + matrix[i][j]) % MOD;
+                sum = (sum + (1LL * freq[j] * matrix[j][i]) % MOD) % MOD;
             }
-            ans = (ans + (sum * 1LL * freq[i]) % MOD) % MOD;
+            ans = (ans + (sum * 1LL) % MOD)%MOD;
         }
         return ans;
     }
