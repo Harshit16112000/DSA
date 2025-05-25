@@ -13,6 +13,8 @@ public:
             if(mpp.find(sum-k) != mpp.end())
             {
                     cnt += mpp[sum-k];
+                    // cnt++ didn't work bcox of negative number.
+                    // [1,-1,0]
             }
             mpp[sum]++;
         }
