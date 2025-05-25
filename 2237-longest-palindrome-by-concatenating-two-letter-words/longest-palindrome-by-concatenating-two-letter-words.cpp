@@ -19,7 +19,7 @@ public:
             string rev = words[i];
             reverse(rev.begin(), rev.end());
 
-            if (words[i] != rev && freq[rev] > 0) {
+            if ( freq[rev] > 0) {
                 freq[rev]--;
                 cnt += 4;
             } else {
@@ -27,6 +27,8 @@ public:
             }
         }
 
+
+        // Was able to get this logic by myself
         for(auto &[key,value] : mpp2)
         {
             cout << key << value << " ";
