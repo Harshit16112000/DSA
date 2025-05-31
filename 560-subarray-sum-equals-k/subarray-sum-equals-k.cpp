@@ -1,23 +1,26 @@
 class Solution {
 public:
     int subarraySum(vector<int>& nums, int k) {
-        int sum = 0;
-        int cnt = 0;
-        unordered_map<int,int> mpp;
-        mpp[0] = 1;
+      unordered_map<int,int> mpp;
 
-        for(int i=0;i<nums.size();i++)
-        {
-            sum += nums[i];
+      mpp[0] = 1;
+      int cnt = 0;
+      int sum = 0;
+      for(auto it: nums)
+      {
+            sum += it;
+          if(mpp.contains(sum - k))
+          {
+                cnt += mpp[sum-k];
+          }
+          
+          mpp[sum]++;
 
-            if(mpp.find(sum-k) != mpp.end())
-            {
-                    cnt += mpp[sum-k];
-                    // cnt++ didn't work bcox of negative number.
-                    // [1,-1,0]
-            }
-            mpp[sum]++;
-        }
-        return cnt;
+          
+      } 
+
+    
+
+      return cnt;
     }
 };
