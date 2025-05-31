@@ -33,12 +33,11 @@ public:
                 if(curr == n*n)  {
                     return move;
                 }
-                
                 for(int i=1; i <= 6;i++)
                 {
                     int next = curr + i;
-                    if(next > n*n) break;
                     
+                    if(next > n*n) continue;    
                     if(!vis[next] ) {
                         vis[next] = 1;
                         if(straightBoard[next] != -1)
