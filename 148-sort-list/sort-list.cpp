@@ -11,24 +11,48 @@
 class Solution {
 public:
     ListNode* sortList(ListNode* head) {
-        vector<int> order;
 
-        ListNode* temp = head;
-        ListNode* ans = head;
-        while(temp != NULL)
+        if(head == NULL || head->next == NULL)  return head;
+       ListNode* slow = head;
+       ListNode* fast = head->next;
+
+       while(fast != NULL && fast->next != NULL)
+       {
+          slow = slow->next;
+          fast = fast->next->next;
+       } 
+
+       ListNode* mid = slow->next;
+       slow->next = NULL;
+
+       ListNode* left = sortList(head);
+       ListNode* right = sortList(mid);
+       return mergeList(left, right);
+    }
+
+    ListNode* mergeList(ListNode* slow, ListNode* fast)
+    {
+        ListNode* temp = new ListNode();
+        ListNode* dummy = temp;
+        while(slow && fast )
         {
-            order.push_back(temp->val);
-            temp = temp->next;
+            if(slow->val <=  fast->val)
+            {
+                temp->next = slow;
+                slow = slow->next;
+                 temp = temp->next;
+            }
+            else {
+                temp->next = fast;
+                temp = temp->next;
+                fast = fast->next;
+            }
         }
 
-        sort(order.begin(), order.end());
+            if (slow) temp->next = slow;
+            else    
+            temp->next = fast;
 
-        for(int i=0;i<order.size();i++)
-        {
-            ans->val = order[i];
-            ans = ans->next;
-        }
-
-        return head;
+        return dummy->next;
     }
 };
