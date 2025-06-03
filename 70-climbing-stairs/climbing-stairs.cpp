@@ -3,6 +3,7 @@ public:
     int dpProblem(int ind, vector<int> &dp)
     {
         if(ind  == 1 || ind == 2)  {
+            dp[ind] = 1;
             return ind;
         }
         if(dp[ind] != -1)  return dp[ind];
