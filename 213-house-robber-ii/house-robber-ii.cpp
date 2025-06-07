@@ -4,6 +4,9 @@ public:
     {
         if(index > n) return 0;
 
+        // We won't return this, as something, as it is not necessary that last output will 
+        // only be the solution.
+        //if(index == n)  return dp[index];
         
         if(dp[index] != -1)  return dp[index];
 
