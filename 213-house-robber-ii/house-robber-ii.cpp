@@ -1,29 +1,39 @@
 class Solution {
 public:
-    int dpProblem(int index, vector<int>& nums, int n, vector<int>& dp)
-    {
-        if(index > n) return 0;
-
-        // We won't return this, as something, as it is not necessary that last output will 
-        // only be the solution.
-        //if(index == n)  return dp[index];
-        
-        if(dp[index] != -1)  return dp[index];
-
-        int take = nums[index] + dpProblem(index+2, nums,n,dp);
-        int nonTake = dpProblem(index+1, nums, n, dp);
-
-        return dp[index] = max(take, nonTake);
-    }
     int rob(vector<int>& nums) {
-     vector<int> dp(nums.size() , -1);
+        vector<int>dp (nums.size() -1, -1);
+        if(nums.size() == 1)  return nums[0];
+        dp[0] = nums[0];
+        for(int i=1;i<=nums.size()-2;i++)
+        {
+            int pick = nums[i];
+            if(i > 1)
+            {
+                pick += dp[i-2];
+            }
 
-     int left = dpProblem(0,nums, nums.size() -2, dp);
-     
-     vector<int> dp2(nums.size() , -1);
-     int right = dpProblem(1,nums, nums.size() -1, dp2);
+            int nonPick = dp[i-1];
 
-     if(nums.size() == 1)  return nums[0];
-        return max(left, right);
+            dp[i] = max(pick, nonPick);
+        }
+
+
+        vector<int>dp2 (nums.size() -1, -1);
+        dp2[0] = nums[1];
+        for(int i=1;i<=nums.size()-2;i++)
+        {
+            int pick = nums[i+1];
+            if(i > 1)
+            {
+                pick += dp2[i-2];
+            }
+
+            int nonPick = dp2[i-1];
+
+            dp2[i] = max(pick, nonPick);
+        }
+
+
+        return max(dp[nums.size() - 2], dp2[nums.size() - 2]);
     }
 };
