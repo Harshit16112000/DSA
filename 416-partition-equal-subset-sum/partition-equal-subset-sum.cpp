@@ -12,7 +12,8 @@ public:
             take = createPartition(index+1, target- nums[index], dp, nums);
         }
 
-        return dp[index][target] = take | nonTake;
+        // Possibility whether to take or nonTake
+        return dp[index][target] = take || nonTake;
     }
 
     bool canPartition(vector<int>& nums) {
