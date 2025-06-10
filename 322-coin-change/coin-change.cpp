@@ -5,6 +5,7 @@ public:
         
         if(index == coins.size() -1 )
         {
+            // Did mistake here  checked amount >= coins[index]
             if(amount%coins[index] ==0)  return amount/coins[index];
             else  return 1e4 + 1;
         }
