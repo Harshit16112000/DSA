@@ -8,7 +8,7 @@ public:
             if (i % coins[0] == 0)
                 dp[0][i] =  i/coins[0];
         }
-
+        
         for(int i=1;i<coins.size();i++)
         {
             for(int j=0;j<=amount;j++)
@@ -21,6 +21,7 @@ public:
             }
         }
 
+    
         int ans = dp[coins.size()-1][amount];
 
         if(ans == 1e4  + 1)  return -1;
