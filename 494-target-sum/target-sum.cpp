@@ -1,24 +1,20 @@
 class Solution {
 public:
-    int dpProblem(int index, int target, vector<int>& nums, unordered_map<string, int>& memo) {
-        if (index == nums.size()) {
-            return target == 0 ? 1 : 0;
+    int solve(int i, int sum, vector<int>& nums, vector<unordered_map<int, int>>& dp) {
+        if (i == nums.size()) {
+            return sum == 0 ? 1 : 0;
         }
+        if (dp[i].count(sum)) return dp[i][sum];
 
-        string key = to_string(index) + "|" + to_string(target);
+        int add = solve(i + 1, sum - nums[i], nums, dp);
+        int subtract = solve(i + 1, sum + nums[i], nums, dp);
 
-        if (memo.find(key) != memo.end()) {
-            return memo[key];
-        }
-
-        int add = dpProblem(index + 1, target - nums[index], nums, memo);
-        int subtract = dpProblem(index + 1, target + nums[index], nums, memo);
-
-        return memo[key] = add + subtract;
+        return dp[i][sum] = add + subtract;
     }
 
     int findTargetSumWays(vector<int>& nums, int target) {
-        unordered_map<string, int> memo;
-        return dpProblem(0, target, nums, memo);
+        int n = nums.size();
+        vector<unordered_map<int, int>> dp(n);
+        return solve(0, target, nums, dp);
     }
 };
