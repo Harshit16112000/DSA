@@ -21,8 +21,19 @@ public:
         string r = s;
         reverse(r.begin(),r.end());
 
-        vector<vector<int>> dp(s.size(), vector<int> (s.size(), -1));
-        int ans = solve(ind1-1,ind1-1,s,r,dp);
-        return ans;
+        vector<vector<int>> dp(s.size()+1, vector<int> (s.size()+1, 0));
+
+        for(int i=1;i<dp.size();i++)
+        {
+            for(int j=1;j<dp.size();j++)
+            {
+                if(s[i-1] == r[j-1])  dp[i][j] = 1 + dp[i-1][j-1];
+                else {
+                    dp[i][j] = max(dp[i-1][j] ,dp[i][j-1]);
+                }    
+            }
+        }
+        
+        return dp[ind1][ind1];
     }
 };
