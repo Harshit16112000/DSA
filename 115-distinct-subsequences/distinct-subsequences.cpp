@@ -2,11 +2,8 @@ class Solution {
 public:
     int dpProblem(int ind1, int ind2, string &s, string &t, vector<vector<int>>& dp)
     {
-        // if(ind1 >= s.size())   return 0;
-        // if(ind2 >= t.size())   return 1;
-
-         if(ind2 == t.size()) return 1;        
-        if(ind1 == s.size()) return 0; 
+        if(ind2 >= t.size())   return 1;
+         if(ind1 >= s.size())   return 0;
         
         if(dp[ind1][ind2] != -1)  return dp[ind1][ind2];
 
