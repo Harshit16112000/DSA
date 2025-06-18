@@ -1,25 +1,38 @@
 class Solution {
 public:
-    int dpProblem(int ind1, int ind2, string &s, string &t, vector<vector<int>>& dp)
-    {
-        if(ind2 >= t.size())   return 1;
-         if(ind1 >= s.size())   return 0;
-        
-        if(dp[ind1][ind2] != -1)  return dp[ind1][ind2];
-
-        if(s[ind1] == t[ind2])
-        {
-            return dp[ind1][ind2] = (dpProblem(ind1+1,ind2+1,s,t,dp) + dpProblem(ind1+1 , ind2, s, t, dp));
-        }
-        return dp[ind1][ind2] =  dpProblem(ind1+1,ind2,s,t,dp); 
-        
-    }
-
+    const int prime = 1e9 + 7;
     int numDistinct(string s, string t) {
      int n = s.size();
      int m = t.size();
-    vector<vector<int>> dp(n, vector<int>(m, -1));
+    vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
      
-     return dpProblem(0,0,s,t,dp);   
+    // Did the mistake here 
+    //  for(int i=0;i<m;i++)
+    //  {
+    //     if(s[0] == t[i])  dp[0][i] = 1;
+    //  }
+
+    // Base Case: An empty t ("") is a subsequence of any prefix of s exactly once
+     for(int i = 0; i <= n; ++i) {
+            dp[i][0] = 1;
+    }
+
+     for(int i=1;i<=n;i++)
+     {
+        for(int j=1;j<=m;j++)
+        {
+            if(s[i-1] == t[j-1])
+            {
+               dp[i][j] =  (dp[i-1][j] + dp[i-1][j-1])% prime;
+            }
+            else {
+                dp[i][j] = dp[i-1][j];
+            }   
+        }
+
+
+    }
+    return dp[n][m];
+
     }
 };
