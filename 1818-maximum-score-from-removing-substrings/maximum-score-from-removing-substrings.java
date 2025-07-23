@@ -1,36 +1,42 @@
 class Solution {
     public int maximumGain(String s, int x, int y) {
-        int cnt1 = removeABThenBA(s, x, y);
-        int cnt2 = removeBAThenAB(s, x, y);
-        return Math.max(cnt1, cnt2);
+        // Always remove the more valuable substring first
+        if (x > y) {
+            return removeWithOrder(s, 'a', 'b', x, y); // remove "ab" first
+        } else {
+            return removeWithOrder(s, 'b', 'a', y, x); // remove "ba" first
+        }
     }
 
-    // Follow your original approach: Remove "ab" then "ba"
-    private int removeABThenBA(String s, int x, int y) {
+    private int removeWithOrder(String s, char firstChar, char secondChar, int firstVal, int secondVal) {
         Stack<Character> st = new Stack<>();
+        int totalScore = 0;
+
         int cnt = 0;
         int index = 1;
         st.push(s.charAt(0));
 
         while (index < s.length()) {
-            if (!st.empty() && st.peek() == 'a' && s.charAt(index) == 'b') {
+            if (!st.empty() && st.peek() == firstChar && s.charAt(index) == secondChar) {
                 st.pop();
-                cnt += x;
+                cnt += firstVal;
             } else {
                 st.push(s.charAt(index));
             }
             index++;
         }
+
+        // Step 2: Remove second pattern from remaining characters
 
         // Now process "ba"
         int a = 0;
         while (!st.empty()) {
             char ch = st.pop();
-            if (ch == 'a') {
+            if (ch == firstChar) {
                 a++;
-            } else if (ch == 'b') {
+            } else if (ch == secondChar) {
                 if (a > 0) {
-                    cnt += y;
+                    cnt += secondVal;
                     a--;
                 }
             } else {
@@ -39,41 +45,7 @@ class Solution {
         }
 
         return cnt;
-    }
 
-    // Follow your original approach: Remove "ba" then "ab"
-    private int removeBAThenAB(String s, int x, int y) {
-        Stack<Character> st = new Stack<>();
-        int cnt = 0;
-        int index = 1;
-        st.push(s.charAt(0));
-
-        while (index < s.length()) {
-            if (!st.empty() && st.peek() == 'b' && s.charAt(index) == 'a') {
-                st.pop();
-                cnt += y;
-            } else {
-                st.push(s.charAt(index));
-            }
-            index++;
-        }
-
-        // Now process "ab"
-        int a = 0;
-        while (!st.empty()) {
-            char ch = st.pop();
-            if (ch == 'b') {
-                a++;
-            } else if (ch == 'a') {
-                if (a > 0) {
-                    cnt += x;
-                    a--;
-                }
-            } else {
-                a = 0;
-            }
-        }
-
-        return cnt;
+        
     }
 }
