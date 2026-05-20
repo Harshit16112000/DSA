@@ -3,10 +3,10 @@ class Solution {
 
         int l = 0;
         int maxi = 0;
-
+        int r = 0;
         HashMap<Integer, Integer> map = new HashMap<>();
 
-        for (int r = 0; r < fruits.length; r++) {
+        while(r != fruits.length) {
 
             map.put(fruits[r], map.getOrDefault(fruits[r], 0) + 1);
 
@@ -22,6 +22,7 @@ class Solution {
             }
 
             maxi = Math.max(maxi, r - l + 1);
+            r++;
         }
 
         return maxi;
