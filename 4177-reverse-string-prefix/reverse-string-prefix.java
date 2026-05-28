@@ -1,10 +1,14 @@
 class Solution {
     public String reversePrefix(String s, int k) {
-        
-        String firstPrefixReverse = s.substring(0,k);
-        String remainingPrefix = s.substring(k);
-        String reversed = new StringBuilder(firstPrefixReverse).reverse().toString();
-        
-        return reversed + remainingPrefix;
+        // 2nd approach
+        char[] arr = s.toCharArray();
+
+        for(int i = 0; i < k / 2; i++) {
+            char temp = arr[i];
+            arr[i] = arr[k - 1 - i];
+            arr[k - 1 - i] = temp;
+        }
+
+        return new String(arr);
     }
 }
