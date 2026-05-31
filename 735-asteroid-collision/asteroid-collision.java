@@ -12,6 +12,14 @@ class Solution {
             else if(asteroids[i] > 0 && st.peek() > 0){
                 st.push(asteroids[i]);            
             }
+            else if(asteroids[i] > 0 && st.peek() < 0)
+            {
+                st.push(asteroids[i]);
+            }
+            else if(asteroids[i] < 0 && st.peek() < 0)
+            {
+                st.push(asteroids[i]);    
+            }
             else if(asteroids[i] < 0 && st.peek() > 0)
             {
                  boolean destroyed = false;
@@ -28,14 +36,6 @@ class Solution {
                     }
                 }
                 if (!destroyed) st.push(asteroids[i]);
-            }
-            else if(asteroids[i] > 0 && st.peek() < 0)
-            {
-                st.push(asteroids[i]);
-            }
-            else if(asteroids[i] < 0 && st.peek() < 0)
-            {
-                st.push(asteroids[i]);    
             }
       }
 
