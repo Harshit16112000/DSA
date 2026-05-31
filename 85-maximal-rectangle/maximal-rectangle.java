@@ -2,15 +2,7 @@ class Solution {
     public int maximalRectangle(char[][] matrix) {
         int mat1D[] = new int[matrix[0].length];
         int maxi = 0;
-        for(int i=0;i<matrix[0].length;i++)
-        {
-            if(matrix[0][i] == '1')
-               mat1D[i] = 1;
-            else
-               mat1D[i] = 0;
-        }
-        maxi = largestRectangleArea(mat1D);
-        for(int i=1;i<matrix.length;i++)
+        for(int i=0;i<matrix.length;i++)
         {
             for(int j=0;j<matrix[i].length;j++)
             {
